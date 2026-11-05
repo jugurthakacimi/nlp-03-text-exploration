@@ -1,5 +1,8 @@
 """nlp_corpus_explore.py - Module 3 Script.
 
+Alias: Jugurtha Kacimi
+Date: 2026-11
+
 Purpose
 
   Perform exploratory analysis of a small, controlled text corpus.
