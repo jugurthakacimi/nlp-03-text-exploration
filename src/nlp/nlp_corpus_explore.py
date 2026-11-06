@@ -65,32 +65,95 @@ LOG.info("Logger configured.")
 # Each document includes a category and text.
 
 corpus: list[dict[str, str]] = [
-    # Dogs
-    {"category": "dog", "text": "A dog barks loudly."},
-    {"category": "dog", "text": "The puppy runs in the yard."},
-    {"category": "dog", "text": "A canine wears a leash."},
-    {"category": "dog", "text": "The kennel holds the dog."},
-    {"category": "dog", "text": "The dog ran across the yard."},
-    {"category": "dog", "text": "The puppy ran across the yard."},
-    # Cats
-    {"category": "cat", "text": "A cat sleeps quietly."},
-    {"category": "cat", "text": "The kitten plays with yarn."},
-    {"category": "cat", "text": "A feline purrs softly."},
-    {"category": "cat", "text": "The cat has whiskers."},
-    {"category": "cat", "text": "The cat slept near the window."},
-    {"category": "cat", "text": "The kitten slept near the window."},
-    # Cars
-    {"category": "car", "text": "A car drives on the road."},
-    {"category": "car", "text": "The sedan parks in the garage."},
-    {"category": "car", "text": "A vehicle has four wheels."},
-    {"category": "car", "text": "The car moves down the highway."},
-    {"category": "car", "text": "The car stopped near the garage."},
-    {"category": "car", "text": "The sedan stopped near the garage."},
-    # Trucks
-    {"category": "truck", "text": "A truck carries cargo."},
-    {"category": "truck", "text": "The pickup pulls a trailer."},
-    {"category": "truck", "text": "The engine powers the truck."},
-    {"category": "truck", "text": "The truck hauls heavy loads."},
+    # Billing issue
+    {
+        "category": "Billing Issue",
+        "text": "The billing department investigated the unexpected charge.",
+    },
+    {
+        "category": "Billing Issue",
+        "text": "A duplicate charge appeared on the recent invoice billing statement.",
+    },
+    {
+        "category": "Billing Issue",
+        "text": "The payment failed because the billing profile needs updating.",
+    },
+    {
+        "category": "Billing Issue",
+        "text": "A billing error caused an incorrect payment amount.",
+    },
+    {
+        "category": "Billing Issue",
+        "text": "The client disputed a billing transaction on the invoice.",
+    },
+    {
+        "category": "Billing Issue",
+        "text": "An incorrect billing charge required an immediate invoice review.",
+    },
+    # Technical Bug
+    {
+        "category": "Technical Bug",
+        "text": "A technical bug causes the software application to crash.",
+    },
+    {
+        "category": "Technical Bug",
+        "text": "The bug report details an error code during export.",
+    },
+    {"category": "Technical Bug", "text": "This software bug fails to save user data."},
+    {
+        "category": "Technical Bug",
+        "text": "An unexpected technical error breaks the layout.",
+    },
+    {
+        "category": "Technical Bug",
+        "text": "The system crash is linked to a recurring application bug.",
+    },
+    {
+        "category": "Technical Bug",
+        "text": "The technical bug triggers an error message upon launch.",
+    },
+    # Account Access
+    {
+        "category": "Account Access",
+        "text": "An account login error blocks user access.",
+    },
+    {
+        "category": "Account Access",
+        "text": "The password reset link fails to restore account access.",
+    },
+    {
+        "category": "Account Access",
+        "text": "Locked out of the user account due to a login failure.",
+    },
+    {
+        "category": "Account Access",
+        "text": "An access request was denied for this locked account.",
+    },
+    {
+        "category": "Account Access",
+        "text": "The user lost account access after a failed login.",
+    },
+    {
+        "category": "Account Access",
+        "text": "Account credentials failed during the login access attempt.",
+    },
+    # Service Request
+    {
+        "category": "Service Request",
+        "text": "A service request asks for a new software license.",
+    },
+    {
+        "category": "Service Request",
+        "text": "The team submitted a request for a service setup.",
+    },
+    {
+        "category": "Service Request",
+        "text": "An administrative service request handles the new license.",
+    },
+    {
+        "category": "Service Request",
+        "text": "The service integration request requires approval.",
+    },
 ]
 
 # Show results
@@ -108,10 +171,12 @@ print(f"Corpus contains {len(corpus)} documents.")
 # and stripping common punctuation. We also filter out very short tokens (length <= 2).
 # This simple tokenizer is sufficient for our small, controlled corpus.
 # Use the string strip() method to remove punctuation from the beginning and end of each token.
+# Remove the word 'the' from the tokens, as it is a common stop word that does not add value to our analysis.
 def tokenize(text: str) -> list[str]:
     """Tokenize the input text into a list of cleaned tokens."""
     tokens = text.lower().split()
-    return [t.strip(".,:;!?()[]\"'") for t in tokens if len(t) > 2]
+    tokens = [t.strip(".,:;!?()[]\"'") for t in tokens if len(t) > 2]
+    return [t for t in tokens if t != "the"]
 
 
 # Define a new empty list to hold the token records we will create.
@@ -229,7 +294,7 @@ for doc in corpus:
                 co_occurrence_dict[token].append(ctx)
 
 # Show results
-for target in ["dog", "cat", "car", "truck"]:
+for target in ["Billing Issue", "Technical Bug", "Account Access", "Service Request"]:
     print(f"\nContext for '{target}':")
     print(co_occurrence_dict[target][:10])
 
@@ -280,7 +345,7 @@ print("IMPORTANT: Close chart window to continue execution.")
 
 # Define a new DataFrame that filters the category frequency DataFrame
 # to get the top 5 tokens for the "dog" category.
-dog_df = category_freq_df.filter(pl.col("category") == "dog").head(5)
+dog_df = category_freq_df.filter(pl.col("category") == "Account Access").head(5)
 
 # Create a figure that is 8 inches wide and 4 inches tall
 plt.figure(figsize=(8, 4))
@@ -294,7 +359,9 @@ ax = plt.gca()
 ax.tick_params(axis="x", labelrotation=45)
 
 # Set the title and labels for the axes of the plot.
-plt.title("Case Example: Top Tokens (Dog Category)\n(Close this window to continue)")
+plt.title(
+    "Case Example: Top Tokens (Account Access Category)\n(Close this window to continue)"
+)
 plt.xlabel("Token")
 plt.ylabel("Frequency")
 
@@ -318,8 +385,17 @@ print("- Co-occurrence reveals contextual relationships between words.")
 print("- Bigrams capture local structure beyond single tokens.")
 print("- Patterns emerge before any machine learning is applied.")
 
-print("\nYOURNAME SPECIFIC OBSERVATIONS:")
-print("TODO")
+print("\nJUGURTHA SPECIFIC OBSERVATIONS:")
+print("- Support log categories reveal distinct operational issue patterns.")
+print(
+    "- High-frequency terms like 'account' and 'access' dominate ticket distributions."
+)
+print(
+    "- Bigrams such as 'service request' and 'technical bug' successfully capture multi-word user problems."
+)
+print(
+    "- Categorizing logs bridges technical operations data with actionable text insights."
+)
 
 
 # ============================================================
