@@ -13,7 +13,7 @@
 
 ## Project Overview
 
-Author: Denise Case
+Author: Jugurtha Kacimi
 
 Date: 2026 October
 
@@ -21,7 +21,7 @@ Third project in the Web Mining and Applied NLP course.
 
 This project introduces exploratory text analysis.
 
-The goal is to examine a collection of text documents,
+The goal is to examine a collection of support ticket logs,
 identify patterns in vocabulary,
 compare categories,
 and explore relationships between words.
@@ -35,18 +35,18 @@ The project is configured in
 
 ## Data
 
-The example uses a small, controlled text corpus
+The example uses a small, controlled set of support ticket logs
 defined directly in the Python script.
 
-The corpus contains 22 short documents
+The dataset contains short support tickets
 organized into four categories:
 
-- Dogs.
-- Cats.
-- Cars.
-- Trucks.
+- Billing Issue.
+- Technical Bug.
+- Account Access.
+- Service Request.
 
-Each document includes a category label
+Each ticket includes a category label
 and a short text passage.
 
 No external input dataset or web connection is required.
@@ -125,7 +125,7 @@ uv run python -m pytest
 
 ## Project Documentation
 
-The [hosted documentation site](https://denisecase.github.io/nlp-03-text-exploration/)
+The [hosted documentation site](https://jugurthakacimi.github.io/nlp-03-text-exploration/)
 is published using Zensical and GitHub Pages.
 
 The documentation site is used to present the project report,
@@ -139,8 +139,8 @@ to check project files and publish the docs.
 
 GitHub Actions include:
 
-- [CI: Python and Documentation Checks](https://github.com/denisecase/nlp-03-text-exploration/actions/workflows/ci-python-zensical.yml)
-- [CD: Documentation Deployment](https://github.com/denisecase/nlp-03-text-exploration/actions/workflows/deploy-zensical.yml)
+- [CI: Python and Documentation Checks](https://github.com/jugurthakacimi/nlp-03-text-exploration/actions/workflows/ci-python-zensical.yml)
+- [CD: Documentation Deployment](https://github.com/jugurthakacimi/nlp-03-text-exploration/actions/workflows/deploy-zensical.yml)
 
 ## Developer Reference
 
@@ -225,7 +225,7 @@ testing, documentation, and code quality.
 
 ## Links
 
-- [Hosted Documentation](https://denisecase.github.io/nlp-03-text-exploration/)
+- [Hosted Documentation](https://jugurthakacimi.github.io/nlp-03-text-exploration/)
 - [Professional Python Workflow Guide](https://denisecase.github.io/pro-analytics-02/)
 - [Citation](CITATION.cff)
 - [License](LICENSE)
